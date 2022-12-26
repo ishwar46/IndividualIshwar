@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:news_app/components/button.dart';
 import 'package:news_app/components/square_tile.dart';
 import 'package:news_app/components/textfield.dart';
-import 'package:news_app/pages/auth_page.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  final Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -161,6 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                 //login button
 
                 MyButton(
+                  text: "Login",
                   onTap: SignUserIn,
                 ),
 
@@ -194,13 +195,11 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-
                 SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
 
                 //google + apple sign in buttons
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -228,9 +227,12 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       width: 4,
                     ),
-                    Text(
-                      "Register Now",
-                      style: TextStyle(color: Colors.blue),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: Text(
+                        "Register Now",
+                        style: TextStyle(color: Colors.blue),
+                      ),
                     ),
                   ],
                 ),
