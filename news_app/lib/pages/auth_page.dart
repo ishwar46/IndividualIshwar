@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:news_app/pages/homepage.dart';
-import 'package:news_app/pages/login_page.dart';
+import 'package:news_app/pages/login_reg.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
@@ -25,7 +23,7 @@ class _AuthPageState extends State<AuthPage> {
           }
           //user is not logged in
           else {
-            return LoginPage();
+            return LoginRegPage();
           }
         },
       ),
