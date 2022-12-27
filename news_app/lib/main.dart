@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/pages/auth_page.dart';
-import 'package:news_app/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {

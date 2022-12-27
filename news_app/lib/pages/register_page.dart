@@ -125,13 +125,17 @@ class _RegPageState extends State<RegPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              message,
-              style: const TextStyle(color: Colors.white),
+          title: Text("Error"),
+          content: Text(message),
+          actions: [
+            Text(message),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("OK"),
             ),
-          ),
+          ],
         );
       },
     );
@@ -186,20 +190,8 @@ class _RegPageState extends State<RegPage> {
                   hintText: 'Confirm Password',
                   obsecureText: false,
                 ),
-                //forgot password text
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Forgot Password?",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 25),
+
+                SizedBox(height: 20),
                 //login button
 
                 MyButton(

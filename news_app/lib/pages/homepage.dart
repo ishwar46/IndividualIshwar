@@ -22,41 +22,61 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              child: Text("Welcome ${user!.email}"),
-            ),
-            ListTile(
-              title: Text("Item 1"),
-            ),
-            ListTile(
-              title: Text("Item 2"),
-            ),
-            ListTile(
-              title: Text("Item 3"),
-            ),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                child: Text("Welcome ${user!.email}"),
+              ),
+              ListTile(
+                title: Text("Item 1"),
+              ),
+              ListTile(
+                title: Text("Item 2"),
+              ),
+              ListTile(
+                title: Text("Item 3"),
+              ),
+            ],
+          ),
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          leading: Image.asset("assets/images/logo.png"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                SignUserOut();
+              },
+              icon: Icon(Icons.logout, color: Colors.black),
+            )
           ],
+          title: Text("Welcome ${user!.email}"),
         ),
-      ),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              SignUserOut();
-            },
-            icon: Icon(Icons.logout),
-          )
-        ],
-        title: Text("Welcome ${user!.email}"),
-      ),
-      body: Container(
-        child: Center(
-          child: Text("Welcome ${user!.email}"),
-          //Button
-        ),
-      ),
-    );
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Disover Text
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    "Discover",
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                //Tab Bar
+
+                //List tiles for news
+
+                //Navigation Bar
+              ],
+            ),
+          ),
+        ));
   }
 }

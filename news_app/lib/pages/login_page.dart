@@ -208,8 +208,14 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       width: 20,
                     ),
-                    //apple logo
-                    SquareTile(imagePath: "assets/images/apple.png"),
+                    // //apple logo
+                    // SquareTile(imagePath: "assets/images/apple.png"),
+                    // SizedBox(width: 20),
+                    //facebook logo
+                    SquareTile(imagePath: "assets/images/facebook.png"),
+                    SizedBox(width: 20),
+                    //twitter logo
+                    SquareTile(imagePath: "assets/images/twitter.png"),
                   ],
                 ),
                 SizedBox(
