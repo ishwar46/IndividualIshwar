@@ -88,7 +88,29 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               onPressed: () {
-                SignUserOut();
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text("Sign Out"),
+                        content: Text("Are you sure you want to sign out?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              SignUserOut();
+                              Navigator.pop(context);
+                            },
+                            child: Text("Sign Out"),
+                          ),
+                        ],
+                      );
+                    });
               },
               icon: Icon(Icons.logout, color: Colors.black),
             )
