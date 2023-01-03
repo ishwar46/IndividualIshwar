@@ -1,6 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:news_app/pages/drawer.dart';
+
+import '../main.dart';
+import '../models/news_model.dart';
+import 'news_detailpage.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -10,6 +16,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  //method for notification
+  void showNotification() async {
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      "channelId",
+      "channelName",
+      importance: Importance.max,
+      priority: Priority.max,
+      ticker: "test",
+      enableLights: true,
+      enableVibration: true,
+    );
+
+    DarwinNotificationDetails darwinNotificationDetails =
+        DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+
+    NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+      iOS: darwinNotificationDetails,
+    );
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      "Satya Ke Khoji",
+      "Welcome to Satya Ke Khoji",
+      notificationDetails,
+    );
+  }
+
   final user = FirebaseAuth.instance.currentUser;
 
   void SignUserOut() async {
@@ -38,18 +77,28 @@ class _HomePageState extends State<HomePage> {
               duration: const Duration(milliseconds: 800),
               tabBackgroundColor: Colors.grey[100]!,
               color: Colors.white,
-              tabs: const [
+              tabs: [
                 GButton(
                   icon: Icons.home,
                   text: 'Home',
+                  //Navigator
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewsDetails(),
+                      ),
+                    );
+                  },
                 ),
                 GButton(
                   icon: Icons.new_releases_rounded,
                   text: 'Latest',
                 ),
                 GButton(
-                  icon: Icons.favorite,
-                  text: 'Favourites',
+                  icon: Icons.notifications,
+                  text: 'Notifi',
+                  onPressed: showNotification,
                 ),
                 GButton(
                   icon: Icons.person,
@@ -64,28 +113,20 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         drawer: Drawer(
-          child: ListView(
-            children: [
-              DrawerHeader(
-                child: Text("Welcome ${user!.email}"),
-              ),
-              ListTile(
-                title: Text("Item 1"),
-              ),
-              ListTile(
-                title: Text("Item 2"),
-              ),
-              ListTile(
-                title: Text("Item 3"),
-              ),
-            ],
-          ),
+          child: MyDrawer(),
         ),
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
           leading: Image.asset("assets/images/logo.png"),
           actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+              child: Text(
+                "Hello " + user!.email!,
+                style: TextStyle(color: Colors.black),
+              ),
+            ),
             IconButton(
               onPressed: () {
                 showDialog(
@@ -121,8 +162,7 @@ class _HomePageState extends State<HomePage> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                //Navigation Bar
+              children: [
                 TabBar(
                   isScrollable: true,
                   physics: BouncingScrollPhysics(),
@@ -150,6 +190,71 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
+                SizedBox(height: 10),
+                //GridView
+                GridView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: newsItems.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Column(
+                        children: [
+                          // Row(
+                          //   children: [
+                          //     Icon(Icons.lock_clock_outlined),
+                          //   ],
+                          // ),
+
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     IconButton(
+                          //       onPressed: () {
+                          //         // //if pressed change the color of the icon
+                          //         // if (newsItems[index].isFavourite) {
+                          //         //   setState(() {
+                          //         //     newsItems[index].isFavourite = false;
+                          //         //   });
+                          //         // } else {
+                          //         //   setState(() {
+                          //         //     newsItems[index].isFavourite = true;
+                          //         //   });
+                          //         // }
+                          //       },
+                          //       icon: Icon(Icons.favorite_border_outlined),
+                          //     ),
+                          //   ],
+                          // ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            newsItems[index].title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          SizedBox(height: 10),
+
+                          Image.asset('assets/images/bipul.png'),
+
+                          //Image.network(newsItems[index].imageUrl),
+
+                          SizedBox(height: 10),
+                          Text(newsItems[index].description),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                //Navigation Bar
+
                 //TabBarView
                 // Expanded(
                 //   child: TabBarView(children: [
