@@ -26,8 +26,11 @@ Future<void> main() async {
   InitializationSettings initializationSettings =
       InitializationSettings(android: androidSettings, iOS: iosSettings);
 
-  bool? initialized =
-      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+//background notification
+  bool? initialized = await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings, onDidReceiveNotificationResponse: (response) {
+    log(response.payload.toString());
+  });
 
   log("Notofication: $initialized");
 }

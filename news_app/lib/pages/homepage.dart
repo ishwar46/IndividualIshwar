@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -47,6 +49,12 @@ class _HomePageState extends State<HomePage> {
       "Welcome to Satya Ke Khoji",
       notificationDetails,
     );
+
+    DateTime time = DateTime.now().add(Duration(seconds: 5));
+    //time based notification
+    await flutterLocalNotificationsPlugin.schedule(
+        0, "test", "testing ishu", time, notificationDetails,
+        payload: "test");
   }
 
   final user = FirebaseAuth.instance.currentUser;
@@ -55,6 +63,40 @@ class _HomePageState extends State<HomePage> {
     await FirebaseAuth.instance.signOut(
         //show loading dialog
         );
+  }
+
+//App launch notification
+  void checkForNotification() async {
+    NotificationAppLaunchDetails? details =
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    if (details != null) {
+      if (details.didNotificationLaunchApp) {
+        NotificationResponse? response = details.notificationResponse;
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => NewsDetails(),
+        //   ),
+        // );
+        if (response != null) {
+          String? payload = response.payload;
+          log("Noitification payload: $payload");
+          //   Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => NewsDetails(),
+          //     ),
+          //   );
+          // }
+        }
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkForNotification();
   }
 
   @override
