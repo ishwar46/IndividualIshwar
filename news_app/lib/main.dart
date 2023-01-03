@@ -1,17 +1,40 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:news_app/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+//Global variable for the notification plugin
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
+  AndroidInitializationSettings androidSettings =
+      AndroidInitializationSettings('@mipmap/logo');
+
+  DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
+    requestAlertPermission: true,
+    requestBadgePermission: true,
+    requestSoundPermission: true,
+    onDidReceiveLocalNotification: (id, title, body, payload) async {},
+  );
+
+  InitializationSettings initializationSettings =
+      InitializationSettings(android: androidSettings, iOS: iosSettings);
+
+  bool? initialized =
+      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+  log("Notofication: $initialized");
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
