@@ -80,3 +80,7 @@ import 'package:news_app/pages/homepage.dart';
 
 //   static getTemporaryDirectory() {}
 // }
+
+class localNotifcation {
+  void main() {}
+}
