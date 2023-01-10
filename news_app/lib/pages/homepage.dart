@@ -1,13 +1,21 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:http/http.dart';
 import 'package:news_app/pages/drawer.dart';
+import 'dart:convert';
 
+import '../components/news_tile.dart';
 import '../main.dart';
-import '../models/news_model.dart';
+import '../models/article_model.dart';
+import '../models/catalog.dart';
+//import '../widgets/news_widget.dart';
+import '../service/api_service.dart';
 import 'news_detailpage.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,6 +26,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ApiService client = ApiService();
+  final user = FirebaseAuth.instance.currentUser;
+
+  //User SignOut
+  void SignUserOut() async {
+    await FirebaseAuth.instance.signOut(
+        //show loading dialog
+        );
+  }
+
   //method for notification
   void showNotification() async {
     AndroidNotificationDetails androidNotificationDetails =
@@ -31,6 +49,7 @@ class _HomePageState extends State<HomePage> {
       enableVibration: true,
     );
 
+    //for ios
     DarwinNotificationDetails darwinNotificationDetails =
         DarwinNotificationDetails(
       presentAlert: true,
@@ -52,20 +71,12 @@ class _HomePageState extends State<HomePage> {
 
     DateTime time = DateTime.now().add(Duration(seconds: 5));
     //time based notification
-    await flutterLocalNotificationsPlugin.schedule(
-        0, "test", "testing ishu", time, notificationDetails,
-        payload: "test");
+    await flutterLocalNotificationsPlugin.schedule(0, "Breaking News",
+        "Balen Shah Files Case in Supreme Court.", time, notificationDetails,
+        payload: "ok");
   }
 
-  final user = FirebaseAuth.instance.currentUser;
-
-  void SignUserOut() async {
-    await FirebaseAuth.instance.signOut(
-        //show loading dialog
-        );
-  }
-
-//App launch notification
+  //App launch notification
   void checkForNotification() async {
     NotificationAppLaunchDetails? details =
         await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
@@ -93,10 +104,32 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  //Data form json file
+  loadData() async {
+    // await Future.delayed(Duration(seconds: 2));
+    // var newsJson = await rootBundle.loadString("assets/files/news.json");
+    // var decodedData = jsonDecode(newsJson);
+    // var newsData = decodedData["newsData"];
+    // NewsModel.newsDetails =
+    //     List.from(newsData).map<News>((item) => News.fromMap(item)).toList();
+    // setState(() {});
+    await Future.delayed(Duration(seconds: 5));
+    final catalogJson =
+        await rootBundle.loadString("assets/files/newsnew.json");
+    final decodedData = jsonDecode(catalogJson);
+    var productsData = decodedData["products"];
+    CatalogModel.items = List.from(productsData)
+        .map<Item>((item) => Item.fromMap(item))
+        .toList();
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
     checkForNotification();
+    loadData();
+    showNotification();
   }
 
   @override
@@ -128,12 +161,12 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NewsDetails(),
+                        builder: (context) => HomePage(),
                       ),
                     );
                   },
                 ),
-                GButton(
+                const GButton(
                   icon: Icons.new_releases_rounded,
                   text: 'Latest',
                 ),
@@ -142,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Notifi',
                   onPressed: showNotification,
                 ),
-                GButton(
+                const GButton(
                   icon: Icons.person,
                   text: 'Profile',
                 ),
@@ -200,119 +233,63 @@ class _HomePageState extends State<HomePage> {
           ],
           title: Text("Welcome ${user!.email}"),
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TabBar(
-                  isScrollable: true,
-                  physics: BouncingScrollPhysics(),
-                  unselectedLabelColor: Colors.black,
-                  labelColor: Colors.purple,
-                  indicatorColor: Colors.purple,
-                  tabs: [
-                    Tab(
-                      text: "All",
-                    ),
-                    Tab(
-                      text: "Latest",
-                    ),
-                    Tab(
-                      text: "Popular",
-                    ),
-                    Tab(
-                      text: "Province",
-                    ),
-                    Tab(
-                      text: "Sports",
-                    ),
-                    Tab(
-                      text: "Politics",
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                //GridView
-                GridView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: newsItems.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Column(
-                        children: [
-                          // Row(
-                          //   children: [
-                          //     Icon(Icons.lock_clock_outlined),
-                          //   ],
-                          // ),
-
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.end,
-                          //   children: [
-                          //     IconButton(
-                          //       onPressed: () {
-                          //         // //if pressed change the color of the icon
-                          //         // if (newsItems[index].isFavourite) {
-                          //         //   setState(() {
-                          //         //     newsItems[index].isFavourite = false;
-                          //         //   });
-                          //         // } else {
-                          //         //   setState(() {
-                          //         //     newsItems[index].isFavourite = true;
-                          //         //   });
-                          //         // }
-                          //       },
-                          //       icon: Icon(Icons.favorite_border_outlined),
-                          //     ),
-                          //   ],
-                          // ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            newsItems[index].title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          SizedBox(height: 10),
-
-                          Image.asset('assets/images/bipul.png'),
-
-                          //Image.network(newsItems[index].imageUrl),
-
-                          SizedBox(height: 10),
-                          Text(newsItems[index].description),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-                //Navigation Bar
-
-                //TabBarView
-                // Expanded(
-                //   child: TabBarView(children: [
-                //     AllNews(),
-                //     ProvinceNews(),
-                //     PopularNews(),
-                //   ]),
-                // ),
-
-                //List tiles for news
-
-                //Navigation Bar
-              ],
-            ),
-          ),
+        body: FutureBuilder(
+          future: client.getArticles(),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
+            if (snapshot.hasData) {
+              List<Article>? articles = snapshot.data;
+              return ListView.builder(
+                itemCount: articles!.length,
+                itemBuilder: (context, index) =>
+                    newsTile(articles[index], context),
+              );
+            }
+            return Center(
+              child: CupertinoActivityIndicator(
+                radius: 15,
+              ),
+            );
+          },
         ),
+        // body: SafeArea(
+        //   child: SingleChildScrollView(
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: const [
+        //         TabBar(
+        //           isScrollable: true,
+        //           physics: BouncingScrollPhysics(),
+        //           unselectedLabelColor: Colors.black,
+        //           labelColor: Colors.purple,
+        //           indicatorColor: Colors.purple,
+        //           tabs: [
+        //             Tab(
+        //               text: "All",
+        //             ),
+        //             Tab(
+        //               text: "Latest",
+        //             ),
+        //             Tab(
+        //               text: "Popular",
+        //             ),
+        //             Tab(
+        //               text: "Province",
+        //             ),
+        //             Tab(
+        //               text: "Sports",
+        //             ),
+        //             Tab(
+        //               text: "Politics",
+        //             ),
+        //           ],
+        //         ),
+        //         SizedBox(height: 10),
+        //         //Widegt for newsTile
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
