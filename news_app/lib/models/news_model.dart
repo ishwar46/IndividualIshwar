@@ -1,58 +1,15 @@
-import 'package:flutter/cupertino.dart';
+class Source {
+  String id;
+  String name;
 
-class NewsItem {
-  final String title;
-  final String imageUrl;
-  final String description;
+  //Constructor
+  Source({required this.id, required this.name});
 
-  NewsItem({
-    required this.title,
-    required this.imageUrl,
-    required this.description,
-  });
+  //Factory Function to map the json
+  factory Source.fromJson(Map<String, dynamic> json) {
+    return Source(
+      id: json['id'],
+      name: json['name'],
+    );
+  }
 }
-
-class NewsItem1 {
-  final String title;
-  final String imageUrl;
-  final String description;
-
-  NewsItem1({
-    required this.title,
-    required this.imageUrl,
-    required this.description,
-  });
-}
-
-final List<NewsItem> newsItems = [
-  NewsItem(
-      title: "Bipul Chettri in Nepal",
-      imageUrl:
-          'https://www.wikidata.org/wiki/Q18596652#/media/File:Bipul_Chhetri_.png',
-      description: 'Bipul Chettri & The Travelling Band at Club Platinum.'),
-  NewsItem(
-      title: "Bipul Chettri in Nepal",
-      imageUrl:
-          'https://www.wikidata.org/wiki/Q18596652#/media/File:Bipul_Chhetri_.png',
-      description: 'Bipul Chettri & The Travelling Band at Club Platinum.'),
-  NewsItem(
-      title: 'Bipul Chettri in Nepal',
-      imageUrl:
-          'https://www.wikidata.org/wiki/Q18596652#/media/File:Bipul_Chhetri_.png',
-      description: 'Bipul Chettri & The Travelling Band at Club Platinum.'),
-  NewsItem(
-      title: 'Bipul Chettri in Nepal',
-      imageUrl:
-          'https://www.wikidata.org/wiki/Q18596652#/media/File:Bipul_Chhetri_.png',
-      description: 'Bipul Chettri & The Travelling Band at Club Platinum.'),
-  NewsItem(
-      title: 'Bipul Chettri in Nepal',
-      imageUrl:
-          'https://www.wikidata.org/wiki/Q18596652#/media/File:Bipul_Chhetri_.png',
-      description: 'Bipul Chettri & The Travelling Band at Club Platinum.'),
-  NewsItem(
-      title: 'Bipul Chettri in Nepal',
-      imageUrl:
-          'https://www.wikidata.org/wiki/Q18596652#/media/File:Bipul_Chhetri_.png',
-      description: 'Bipul Chettri & The Travelling Band at Club Platinum.'),
-];
