@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context) {
         return AlertDialog(
           title: Text("Error"),
-          content: Text("No user found for that email."),
+          content: Text("Email did not match any account"),
           actions: [
             TextButton(
               onPressed: () {
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context) {
         return AlertDialog(
           title: Text("Error"),
-          content: Text("Wrong password provided for that user."),
+          content: Text("Please check your password and try again."),
           actions: [
             TextButton(
               onPressed: () {
@@ -113,11 +113,6 @@ class _LoginPageState extends State<LoginPage> {
                   "assets/images/applogo.png",
                   height: 300,
                 ),
-                // Icon(
-                //   Icons.lightbulb_outlined,
-                //   size: 100,
-                // ),
-                // SizedBox(height: 20),
                 //welcome message
                 Text(
                   "Please Login to Continue",
@@ -131,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                 //username
                 MyTextField(
                   controller: _emailController,
-                  hintText: 'Username',
+                  hintText: 'Email',
                   obsecureText: false,
                 ),
                 SizedBox(height: 10),
@@ -139,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                 MyTextField(
                   controller: _passwordController,
                   hintText: 'Password',
-                  obsecureText: false,
+                  obsecureText: true,
                 ),
                 SizedBox(
                   height: 20,
@@ -159,12 +154,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 25),
                 //login button
-
                 MyButton(
                   text: "Login",
                   onTap: SignUserIn,
                 ),
-
                 SizedBox(
                   height: 40,
                 ),
@@ -222,7 +215,6 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 //not a member? register now
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

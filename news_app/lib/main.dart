@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:news_app/pages/login_page.dart';
 
 //Global variable for the notification plugin
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -42,11 +43,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Satya Ke Khoji',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      //home: AuthPage(),
       home: SplashScreen(),
     );
   }
@@ -81,8 +81,8 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset(
                 'assets/images/applogo.png',
-                width: 200,
-                height: 200,
+                width: 400,
+                height: 400,
               ),
             ],
           ),

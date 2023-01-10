@@ -18,7 +18,7 @@ class _RegPageState extends State<RegPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
-//sign user up
+//register user
   void SignUserUp() async {
     //show loading dialog
     showDialog(
@@ -31,72 +31,12 @@ class _RegPageState extends State<RegPage> {
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
               ),
               SizedBox(width: 20),
-              Text("Logging in..."),
+              Text("Please Wait..."),
             ],
           ),
         );
       },
     );
-    //   //try to creating new user
-    //   try {
-    //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    //       email: _emailController.text,
-    //       password: _passwordController.text,
-    //     );
-    //     //close loading dialog
-    //     Navigator.pop(context);
-    //   } on FirebaseAuthException catch (e) {
-    //     //close loading dialog
-    //     Navigator.pop(context);
-    //     if (e.code == 'user-not-found') {
-    //       wrongEmail();
-    //     } else if (e.code == 'wrong-password') {
-    //       wrongPassword();
-    //     }
-    //   }
-    // }
-
-    // //show dialog if email is wrong
-    // void wrongEmail() {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return AlertDialog(
-    //         title: Text("Error"),
-    //         content: Text("No user found for that email."),
-    //         actions: [
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.pop(context);
-    //             },
-    //             child: Text("OK"),
-    //           ),
-    //         ],
-    //       );
-    //     },
-    //   );
-    // }
-
-    // //show dialog if password is wrong
-    // void wrongPassword() {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return AlertDialog(
-    //         title: Text("Error"),
-    //         content: Text("Wrong password provided for that user."),
-    //         actions: [
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.pop(context);
-    //             },
-    //             child: Text("OK"),
-    //           ),
-    //         ],
-    //       );
-    //     },
-    //   );
-    // }
     // try creating the user
     try {
       // check if password is confirmed
@@ -118,7 +58,6 @@ class _RegPageState extends State<RegPage> {
       showErrorMessage(e.code);
     }
   }
-
   // error message to user
   void showErrorMessage(String message) {
     showDialog(
@@ -171,7 +110,7 @@ class _RegPageState extends State<RegPage> {
                 //username
                 MyTextField(
                   controller: _emailController,
-                  hintText: 'Username',
+                  hintText: 'Email',
                   obsecureText: false,
                 ),
                 SizedBox(height: 10),
@@ -182,7 +121,7 @@ class _RegPageState extends State<RegPage> {
                   obsecureText: false,
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 //Confirm password
                 MyTextField(

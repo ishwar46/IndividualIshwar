@@ -1,0 +1,68 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Balen Shah files case at Supreme Court",
+            "description": "Kathmandu Mayor Balen Shah has filed a writ petition at the Supreme Court against the Election Commission‘s decision to fine him on the charge of not submitting the election expense details on time.",
+            "price": 19,
+            "color": "#33505a",
+            "image": "https://english.makalukhabar.com/wp-content/uploads/2022/04/Balen-Shah-_-Makalukhabar-_-MK-1.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Nepal Telecom postpones 5G test plan",
+            "description": "The Nepal Telecommunications Company, popularly known as Nepal Telecom, says it has put on hold its plan to test the 5G service.",
+            "price": 20,
+            "color": "#00ac51",
+            "image": "https://english.onlinekhabar.com/wp-content/uploads/2017/02/Nepal-Telecom.jpg"
+        },
+        {
+            "id": 3,
+            "name": "मेयर बालेन इन्डोनेसिया भ्रमणमा",
+            "description": "काठमाडौं महानगरपालिकाका मेयर बालेन्द्र शाह (बालेन) इन्डोनेसिया गएका छन् । मेयर बालेन निजी भ्रमणको लागि इन्डोनेसिया गएको मेयरका प्रमुख स्वकीय सचिव भुपदेव शाहले जानकारी दिए ।",
+            "price": 25,
+            "color": "#e0bfae",
+            "image": "https://www.onlinekhabar.com/wp-content/uploads/2022/04/Balendra-Shaha-Balen-5-1024x683.jpg"
+        },
+        {
+            "id": 4,
+            "name": "साउदी अरबले रोनाल्डोमाथि किन खन्यायो पैसा ?",
+            "description": " मंगलबार जब रोनाल्डो औपचारिक रुपमा नयाँ क्लबमा जोडिए, त्यसपछि उनले उनले भनेका छन्, ‘युरोपमा धेरै रेकर्ड बन्यो, अब साउदी अबरमा केही रेकर्ड बनाउन चाहन्छु ।",
+            "price": 22,
+            "color": "#544ee4",
+            "image": "https://www.onlinekhabar.com/wp-content/uploads/2023/01/Ronaldo-2-1024x624.jpg"
+        },
+        {
+            "id": 5,
+            "name": "साउदी अरबले रोनाल्डोमाथि किन खन्यायो पैसा ?",
+            "description": "by Guillem Balague",
+            "price": 20,
+            "color": "#e3e4e9",
+            "image": "https://www.onlinekhabar.com/wp-content/uploads/2023/01/Ronaldo-1-1024x624.jpg"
+        },
+        {
+            "id": 6,
+            "name": "Introduction to Algorithms",
+            "description": "3rd Edition (The MIT Press)",
+            "price": 79,
+            "color": "#f73984",
+            "image": "https://www.onlinekhabar.com/wp-content/uploads/2023/01/Ronaldo-1-1024x624.jpg"
+        },
+        {
+            "id": 7,
+            "name": "Half Girlfriend: Movie Tie-In Edition",
+            "description": "by Chetan Bhagat",
+            "price": 10,
+            "color": "#1c1c1c",
+            "image": "https://www.onlinekhabar.com/wp-content/uploads/2023/01/Ronaldo-1-1024x624.jpg"
+        },
+        {
+            "id": 8,
+            "name": "Tim Cook",
+            "description": "The Genius Who Took Apple to the Next Level",
+            "price": 20,
+            "color": "#7c95eb",
+            "image": "https://www.onlinekhabar.com/wp-content/uploads/2023/01/Ronaldo-1-1024x624.jpg"
+        }
+    ]
+}
