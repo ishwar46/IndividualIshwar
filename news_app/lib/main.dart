@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:news_app/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:news_app/pages/homepage.dart';
 import 'package:news_app/pages/login_page.dart';
+import 'package:news_app/pages/profile.dart';
 
 //Global variable for the notification plugin
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -44,10 +46,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Satya Ke Khoji',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SplashScreen(),
+      initialRoute: "/splash",
+      routes: {
+        "/": (context) => SplashScreen(),
+        "/home": (context) => HomePage(),
+        "/splash": (context) => const SplashScreen(),
+        "/profile": (context) => const MyProfile(),
+      },
     );
   }
 }
@@ -88,4 +93,10 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
         ));
   }
+}
+
+class MyRoutes {
+  String splashRoute = "/splash";
+  String homeRoute = "/home";
+  String profileRpute = "/profile";
 }

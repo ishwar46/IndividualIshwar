@@ -44,6 +44,7 @@ dependencies:
   firebase_messaging: ^14.2.1
   http: ^0.13.5
   loading_gifs: ^0.3.0
+  flutter_statusbarcolor_ns: ^0.5.0
 
 
 

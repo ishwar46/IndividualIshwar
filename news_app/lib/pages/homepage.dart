@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:http/http.dart';
-import 'package:news_app/pages/drawer.dart';
+import 'package:news_app/pages/profile.dart';
+//import 'package:http/http.dart';
 import 'dart:convert';
 
 import '../components/news_tile.dart';
@@ -16,7 +16,7 @@ import '../models/article_model.dart';
 import '../models/catalog.dart';
 //import '../widgets/news_widget.dart';
 import '../service/api_service.dart';
-import 'news_detailpage.dart';
+import '../widgets/drawer.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({super.key});
@@ -169,15 +169,24 @@ class _HomePageState extends State<HomePage> {
                 const GButton(
                   icon: Icons.new_releases_rounded,
                   text: 'Latest',
+                  //Navigator
                 ),
                 GButton(
                   icon: Icons.notifications,
                   text: 'Notifi',
                   onPressed: showNotification,
                 ),
-                const GButton(
+                GButton(
                   icon: Icons.person,
                   text: 'Profile',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyProfile(),
+                      ),
+                    );
+                  },
                 ),
               ],
               selectedIndex: 0,
@@ -187,9 +196,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        drawer: Drawer(
-          child: MyDrawer(),
-        ),
+        drawer: MyDrawerNew(),
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
@@ -228,7 +235,10 @@ class _HomePageState extends State<HomePage> {
                       );
                     });
               },
-              icon: Icon(Icons.logout, color: Colors.black),
+              icon: Icon(
+                Icons.logout,
+                color: Colors.black,
+              ),
             )
           ],
           title: Text("Welcome ${user!.email}"),
