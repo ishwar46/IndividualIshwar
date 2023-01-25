@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/components/button.dart';
 import 'package:news_app/components/square_tile.dart';
@@ -17,26 +18,44 @@ class _RegPageState extends State<RegPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _phonenumberController = TextEditingController();
+  final _fullNameController = TextEditingController();
 
 //register user
   void SignUserUp() async {
     //show loading dialog
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Row(
-            children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              ),
-              SizedBox(width: 20),
-              Text("Please Wait..."),
-            ],
-          ),
-        );
-      },
-    );
+        context: context,
+        builder: (BuildContext context) => CupertinoAlertDialog(
+              title: new Text("Dialog Title"),
+              content: new Text("This is my content"),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  isDefaultAction: true,
+                  child: Text("Yes"),
+                ),
+                CupertinoDialogAction(
+                  child: Text("No"),
+                )
+              ],
+            ));
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return AlertDialog(
+    //       content: Row(
+    //         children: [
+    //           CircularProgressIndicator(
+    //             valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+    //           ),
+    //           SizedBox(width: 20),
+    //           Text("Please Wait..."),
+    //         ],
+    //       ),
+    //     );
+    //   },
+    // );
     // try creating the user
     try {
       // check if password is confirmed
@@ -58,6 +77,7 @@ class _RegPageState extends State<RegPage> {
       showErrorMessage(e.code);
     }
   }
+
   // error message to user
   void showErrorMessage(String message) {
     showDialog(
@@ -127,6 +147,35 @@ class _RegPageState extends State<RegPage> {
                 MyTextField(
                   controller: _confirmPasswordController,
                   hintText: 'Confirm Password',
+                  obsecureText: false,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                //username
+                MyTextField(
+                  controller: _usernameController,
+                  hintText: 'Username',
+                  obsecureText: false,
+                ),
+
+                SizedBox(
+                  height: 10,
+                ),
+                //Full Name
+                MyTextField(
+                  controller: _fullNameController,
+                  hintText: 'Full name',
+                  obsecureText: false,
+                ),
+                //Phone Number
+                SizedBox(
+                  height: 10,
+                ),
+                //Full Name
+                MyTextField(
+                  controller: _phonenumberController,
+                  hintText: 'Phone number',
                   obsecureText: false,
                 ),
 

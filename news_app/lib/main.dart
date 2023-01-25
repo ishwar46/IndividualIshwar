@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:news_app/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -46,6 +47,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Satya Ke Khoji',
+      theme: ThemeData(
+        textTheme: GoogleFonts.aBeeZeeTextTheme(Theme.of(context).textTheme),
+      ),
       initialRoute: "/splash",
       routes: {
         "/": (context) => SplashScreen(),

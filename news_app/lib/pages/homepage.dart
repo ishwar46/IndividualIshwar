@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,23 +9,22 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:news_app/pages/profile.dart';
 //import 'package:http/http.dart';
 import 'dart:convert';
-
 import '../components/news_tile.dart';
 import '../main.dart';
 import '../models/article_model.dart';
 import '../models/catalog.dart';
-//import '../widgets/news_widget.dart';
 import '../service/api_service.dart';
 import '../widgets/drawer.dart';
+import '../widgets/internet_connection.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
-
+  HomePage({super.key, required});
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  Connectivity connectivity = Connectivity();
   ApiService client = ApiService();
   final user = FirebaseAuth.instance.currentUser;
 
@@ -69,7 +68,7 @@ class _HomePageState extends State<HomePage> {
       notificationDetails,
     );
 
-    DateTime time = DateTime.now().add(Duration(seconds: 5));
+    DateTime time = DateTime.now().add(Duration(seconds: 10));
     //time based notification
     await flutterLocalNotificationsPlugin.schedule(0, "Breaking News",
         "Balen Shah Files Case in Supreme Court.", time, notificationDetails,
@@ -83,22 +82,9 @@ class _HomePageState extends State<HomePage> {
     if (details != null) {
       if (details.didNotificationLaunchApp) {
         NotificationResponse? response = details.notificationResponse;
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => NewsDetails(),
-        //   ),
-        // );
         if (response != null) {
           String? payload = response.payload;
           log("Noitification payload: $payload");
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => NewsDetails(),
-          //     ),
-          //   );
-          // }
         }
       }
     }
@@ -106,13 +92,6 @@ class _HomePageState extends State<HomePage> {
 
   //Data form json file
   loadData() async {
-    // await Future.delayed(Duration(seconds: 2));
-    // var newsJson = await rootBundle.loadString("assets/files/news.json");
-    // var decodedData = jsonDecode(newsJson);
-    // var newsData = decodedData["newsData"];
-    // NewsModel.newsDetails =
-    //     List.from(newsData).map<News>((item) => News.fromMap(item)).toList();
-    // setState(() {});
     await Future.delayed(Duration(seconds: 5));
     final catalogJson =
         await rootBundle.loadString("assets/files/newsnew.json");
@@ -123,6 +102,8 @@ class _HomePageState extends State<HomePage> {
         .toList();
     setState(() {});
   }
+
+  //internet connection
 
   @override
   void initState() {
@@ -167,8 +148,8 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
                 const GButton(
-                  icon: Icons.new_releases_rounded,
-                  text: 'Latest',
+                  icon: Icons.favorite_border_outlined,
+                  text: 'Favorites',
                   //Navigator
                 ),
                 GButton(
@@ -239,67 +220,48 @@ class _HomePageState extends State<HomePage> {
                 Icons.logout,
                 color: Colors.black,
               ),
-            )
+            ),
           ],
           title: Text("Welcome ${user!.email}"),
         ),
-        body: FutureBuilder(
-          future: client.getArticles(),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
-            if (snapshot.hasData) {
-              List<Article>? articles = snapshot.data;
-              return ListView.builder(
-                itemCount: articles!.length,
-                itemBuilder: (context, index) =>
-                    newsTile(articles[index], context),
+        body: StreamBuilder<ConnectivityResult>(
+            stream: connectivity.onConnectivityChanged,
+            builder: (context, snapshot) {
+              return FutureBuilder(
+                future: client.getArticles(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Article>> snapshot) {
+                  if (snapshot.hasData) {
+                    List<Article>? articles = snapshot.data;
+                    return ListView.builder(
+                      itemCount: articles!.length,
+                      itemBuilder: (context, index) =>
+                          newsTile(articles[index], context),
+                    );
+                  }
+                  return Center(
+                    child: CupertinoActivityIndicator(
+                      radius: 15,
+                    ),
+                  );
+                },
               );
-            }
-            return Center(
-              child: CupertinoActivityIndicator(
-                radius: 15,
-              ),
-            );
-          },
-        ),
-        // body: SafeArea(
-        //   child: SingleChildScrollView(
-        //     child: Column(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: const [
-        //         TabBar(
-        //           isScrollable: true,
-        //           physics: BouncingScrollPhysics(),
-        //           unselectedLabelColor: Colors.black,
-        //           labelColor: Colors.purple,
-        //           indicatorColor: Colors.purple,
-        //           tabs: [
-        //             Tab(
-        //               text: "All",
-        //             ),
-        //             Tab(
-        //               text: "Latest",
-        //             ),
-        //             Tab(
-        //               text: "Popular",
-        //             ),
-        //             Tab(
-        //               text: "Province",
-        //             ),
-        //             Tab(
-        //               text: "Sports",
-        //             ),
-        //             Tab(
-        //               text: "Politics",
-        //             ),
-        //           ],
-        //         ),
-        //         SizedBox(height: 10),
-        //         //Widegt for newsTile
-        //       ],
-        //     ),
-        //   ),
-        // ),
+            }),
+      ),
+    );
+  }
+
+//StreamBuilder Widget
+  Widget _buildStreamBuider() {
+    return Center(
+      child: StreamBuilder<ConnectivityResult>(
+        stream: connectivity.onConnectivityChanged,
+        builder: (context, snapshot) {
+          return InternetConnectionWidget(
+            snapshot: snapshot,
+            widget: HomePage(),
+          );
+        },
       ),
     );
   }

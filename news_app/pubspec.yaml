@@ -46,6 +46,13 @@ dependencies:
   loading_gifs: ^0.3.0
   flutter_statusbarcolor_ns: ^0.5.0
   google_sign_in: ^5.4.3
+  connectivity_plus: ^3.0.2
+  cloud_firestore: ^4.3.1
+  expandable_text: ^2.3.0
+  cached_network_image: ^3.2.3
+  google_fonts: ^3.0.1
+  webview_flutter: ^4.0.2
+  url_launcher: ^6.1.8
 
 
 
